@@ -7,6 +7,7 @@ import java.util.Objects;
 
 public class MyLinkedList<T> implements MyList<T> {
     private Node<T> first;
+    private Node<T> last;
     private int size;
 
     public MyLinkedList() {
@@ -16,21 +17,15 @@ public class MyLinkedList<T> implements MyList<T> {
     public boolean add(T element) {
         if (first == null) {
             first = new Node<>(element, null);
+            last = first;
             size++;
             return true;
         } else {
-            findNode(first).next = new Node<>(element, null);
+            last.next = new Node<>(element, null);
+            last = last.next;
             size++;
         }
         return true;
-    }
-
-    private Node<T> findNode(Node<T> start) {
-        if (start.next == null) {
-            return start;
-        } else {
-            return findNode(start.next);
-        }
     }
 
     @Override
@@ -89,7 +84,9 @@ public class MyLinkedList<T> implements MyList<T> {
             counter++;
         }
         T tempValue = temp.next.value;
+        Node<T> removeNode = temp.next;
         temp.next = temp.next.next;
+        removeNode.next = null;
         size--;
         return tempValue;
     }
