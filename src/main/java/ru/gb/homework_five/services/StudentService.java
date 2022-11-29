@@ -16,10 +16,8 @@ public class StudentService {
         return repository.findById(id).orElseThrow(() -> new RuntimeException("Студент не найден"));
     }
 
-    public void save() {
-        for (int i = 0; i < 1000; i++) {
-            repository.save(new Student("Name" + i, i));
-        }
+    public void save(Student student) {
+            repository.save(student);
     }
 
     public void deleteById(Long id) {
@@ -30,10 +28,10 @@ public class StudentService {
         return repository.findAll();
     }
 
-    public void update(Long id, String name, int mark) {
-        Student student = repository.findById(id).orElseThrow(() -> new RuntimeException("Студент не найден"));
-        student.setMark(mark);
-        student.setName(name);
-        repository.save(student);
+    public void update(Student student) {
+        Student studentTemp = repository.findById(student.getId()).orElseThrow(() -> new RuntimeException("Студент не найден"));
+        studentTemp.setMark(student.getMark());
+        studentTemp.setName(student.getName());
+        repository.save(studentTemp);
     }
 }

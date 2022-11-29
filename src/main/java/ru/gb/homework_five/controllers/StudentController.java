@@ -8,33 +8,33 @@ import ru.gb.homework_five.services.StudentService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/students")
 @RequiredArgsConstructor
 public class StudentController {
     private final StudentService service;
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public Student findById(@PathVariable Long id) {
         return service.findById(id);
     }
 
-    @GetMapping("add1000Student")
-    public void addOneThousandStudent() {
-        service.save();
+    @PostMapping()
+    public void addOneThousandStudent(@RequestBody Student student) {
+        service.save(student);
     }
 
-    @GetMapping("delete/{id}")
+    @DeleteMapping("/{id}")
     public void deleteById(@PathVariable Long id) {
         service.deleteById(id);
     }
 
-    @GetMapping("/allStudent")
+    @GetMapping()
     public List<Student> findAll(){
         return service.findAll();
     }
 
-    @GetMapping("update")
-    public void update(@RequestParam Long id, @RequestParam String name, @RequestParam int mark) {
-        service.update(id, name, mark);
+    @PutMapping()
+    public void update(@RequestBody Student student) {
+        service.update(student);
     }
 }
